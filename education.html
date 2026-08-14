@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS Portfolio | Home</title>
+    <style>
+        :root { --bg-color: #0f172a; --card-bg: #1e293b; --text-main: #f8fafc; --text-muted: #94a3b8; --primary: #38bdf8; --secondary: #818cf8; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
+        header { background-color: #1e293b; position: fixed; width: 100%; top: 0; border-bottom: 1px solid #334155; z-index: 100; }
+        nav { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 2rem; }
+        .logo { font-size: 1.25rem; font-weight: bold; color: var(--primary); text-decoration: none; }
+        .nav-links { display: flex; list-style: none; gap: 2rem; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; }
+        .nav-links a.active, .nav-links a:hover { color: var(--primary); }
+        main { flex: 1; max-width: 900px; width: 100%; margin: 8rem auto 4rem auto; padding: 0 2rem; }
+        h1 { font-size: 2.5rem; margin-bottom: 0.5rem; background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { color: var(--primary); font-size: 1.2rem; font-weight: 600; margin-bottom: 2rem; }
+        p { color: var(--text-muted); margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 1.7; }
+        .highlight { color: var(--text-main); font-weight: 600; }
+        .statement-box { background-color: var(--card-bg); border-left: 4px solid var(--primary); padding: 2rem; border-radius: 0 12px 12px 0; margin-top: 2rem; }
+        .statement-box h3 { margin-bottom: 1rem; color: var(--text-main); }
+        footer { text-align: center; padding: 2rem; color: var(--text-muted); border-top: 1px solid #334155; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">CS Applicant Portfolio</a>
+            <ul class="nav-links">
+                <li><a href="website.html" class="active">Home</a></li>
+                <li><a href="education.html">Education</a></li>
+                <li><a href="interests.html">Coding Interests</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Personal Statement</h1>
+        <div class="subtitle">Admissions Portfolio & Motivation Letter</div>
+        
+        <p>My journey into Computer Science is defined by deliberate choice and autonomous learning. While traditional academic pathways work for many, my path required me to take full ownership of my education, leading to my achievement of a <span class="highlight">GED Certificate</span>. This unconventional foundation forced me to develop rigorous self-discipline, time management skills, and a deeply analytical approach to personal milestones—qualities that are directly essential to solving complex engineering problems.</p>
+        
+        <p>My interest in technology goes far deeper than simply utilizing consumer software. I am fascinated by the core logic powering interactive systems, specifically **web application design and state management**. To prepare myself for university-level computing, I have focused heavily on building a solid understanding of logic systems, structural semantics, and native programming languages like JavaScript.</p>
+        
+        <div class="statement-box">
+            <h3>Academic Commitment</h3>
+            <p style="margin-bottom: 0;">I am seeking admission to your Computer Science program not just to learn how to write code, but to master structural software architecture, database scalability, and algorithmic theory. I am fully prepared to bring my proven capacity for independent, high-level research to your university classroom.</p>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2026 University Application Portfolio.</p>
+    </footer>
+</body>
+</html>
