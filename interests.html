@@ -20,7 +20,6 @@
         h2 { font-size: 1.75rem; margin: 2.5rem 0 1rem 0; color: var(--primary); border-bottom: 1px solid #334155; padding-bottom: 0.5rem; }
         p { color: var(--text-muted); margin-bottom: 1.2rem; font-size: 1.1rem; }
         
-        /* Interactive Tool Styles */
         .interactive-box { background: linear-gradient(135deg, #1e293b, #0f172a); border: 2px solid var(--primary); padding: 2rem; border-radius: 12px; margin: 1.5rem 0; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3); }
         .tool-ui { display: flex; gap: 1rem; margin-top: 1rem; align-items: center; flex-wrap: wrap; }
         input.tool-input { background: #0f172a; border: 1px solid #334155; color: var(--text-main); padding: 0.8rem; border-radius: 6px; font-size: 1.1rem; letter-spacing: 2px; flex: 1; min-width: 200px; }
@@ -29,7 +28,6 @@
         .tool-btn:hover { opacity: 0.9; }
         .result-display { margin-top: 1rem; font-size: 1.2rem; font-weight: bold; color: var(--success); min-height: 1.8rem; }
         
-        /* Project Grid Styles */
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
         .project-card { background: var(--card-bg); border: 1px solid #334155; padding: 1.8rem; border-radius: 8px; transition: transform 0.2s, border-color 0.2s; display: flex; flex-direction: column; justify-content: space-between; }
         .project-card:hover { transform: translateY(-3px); border-color: var(--secondary); }
@@ -39,54 +37,22 @@
         .project-link:hover { text-decoration: underline; }
         
         footer { text-align: center; padding: 2rem; color: var(--text-muted); border-top: 1px solid #334155; font-size: 0.9rem; }
+
         /* --- RESPONSIVE CSS MEDIA QUERIES --- */
-
-/* For smaller desktop screens and tablets (under 768px wide) */
-@media (max-width: 768px) {
-    main {
-        margin: 7rem auto 3rem auto; /* Reduces spacing on medium screens */
-        padding: 0 1.5rem;
-    }
-    h1 {
-        font-size: 2rem; /* Shrinks the headline text so it doesn't wrap awkwardly */
-    }
-}
-
-/* For smartphones (under 600px wide) */
-@media (max-width: 600px) {
-    nav {
-        flex-direction: column; /* Stacks the logo on top of the links */
-        gap: 1rem;
-        text-align: center;
-        padding: 1rem;
-    }
-    .nav-links {
-        gap: 1rem; /* Closes the spacing between mobile menu buttons */
-        justify-content: center;
-        width: 100%;
-    }
-    main {
-        margin: 10rem auto 2rem auto; /* Shifts text down since the header stacked taller */
-        padding: 0 1rem;
-    }
-    h1 {
-        font-size: 1.75rem;
-    }
-    p {
-        font-size: 1rem; /* Highly readable body text size for mobile panels */
-    }
-    .card, .interactive-box {
-        padding: 1.2rem; /* Reduces inner card spacing to make room for content */
-    }
-    .tool-ui {
-        flex-direction: column; /* Stacks the binary input box on top of its button */
-        align-items: stretch;
-    }
-    input.tool-input, .tool-btn {
-        width: 100%; /* Makes forms expand cleanly across phone displays */
-    }
-}
-
+        @media (max-width: 768px) {
+            main { margin: 7rem auto 3rem auto; padding: 0 1.5rem; }
+            h1 { font-size: 2rem; }
+        }
+        @media (max-width: 600px) {
+            nav { flex-direction: column; gap: 1rem; text-align: center; padding: 1rem; }
+            .nav-links { gap: 1rem; justify-content: center; width: 100%; }
+            main { margin: 10rem auto 2rem auto; padding: 0 1rem; }
+            h1 { font-size: 1.75rem; }
+            p { font-size: 1rem; }
+            .interactive-box, .project-card { padding: 1.2rem; }
+            .tool-ui { flex-direction: column; align-items: stretch; }
+            input.tool-input, .tool-btn { width: 100%; }
+        }
     </style>
 </head>
 <body>
@@ -94,7 +60,7 @@
         <nav>
             <a href="index.html" class="logo">CS Applicant Portfolio</a>
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html">About</a></li>
                 <li><a href="education.html">Education</a></li>
                 <li><a href="interests.html" class="active">Coding Interests</a></li>
                 <li><a href="contact.html">Contact</a></li>
@@ -105,7 +71,6 @@
         <h1>Coding & Web App Development</h1>
         <p>My interest in computer science is deeply rooted in computational logic and building functional tools. Rather than simply memorising layouts, I focus on learning how client-side applications manage data states and processes algorithmically.</p>
         
-        <!-- INTERACTIVE LIVE DEMO -->
         <h2>Live Demonstration: Logic Scripting</h2>
         <p>To demonstrate my foundational knowledge of bitwise tracking and basic computer structures, I built this native JavaScript tool to evaluate computer instructions natively in the DOM.</p>
         
@@ -119,26 +84,23 @@
             <div id="conversionResult" class="result-display">Decimal Value: 0</div>
         </div>
 
-        <!-- ACTIVE PROJECTS SECTION -->
         <h2>Functional Engineering Projects</h2>
         <p>Below are active coding targets and functional web applications designed to test my logic systems, algorithmic scaling, and modern web architectures.</p>
         
         <div class="grid">
-            <!-- Project 1 -->
             <div class="project-card">
                 <div>
-                    <h3 style="color: var(--text-main); font-size: 1.3rem;">Vanilla Single Page Portfolio</h3>
-                    <p style="font-size: 0.95rem; margin-top: 0.5rem;">An admissions framework manipulating active state visibility properties across clean viewport fragments natively.</p>
+                    <h3 style="color: var(--text-main); font-size: 1.3rem;">Vanilla Multi-Page Portfolio</h3>
+                    <p style="font-size: 0.95rem; margin-top: 0.5rem;">An admissions framework incorporating fluid, responsive layout viewports across independent HTML pages cleanly.</p>
                     <div class="project-tags">
                         <span class="tag">HTML5</span>
                         <span class="tag">CSS Grid</span>
                         <span class="tag">Vanilla JS</span>
                     </div>
                 </div>
-                <a href="https://github.com" target="_blank" class="project-link">View Source Code &rarr;</a>
+                <a href="#" class="project-link" style="color: var(--text-muted); pointer-events: none;">Active Live Setup &bull;</a>
             </div>
 
-            <!-- Project 2 -->
             <div class="project-card">
                 <div>
                     <h3 style="color: var(--text-main); font-size: 1.3rem;">Algorithmic Logic Tracker</h3>
@@ -161,25 +123,16 @@
         function convertBinary() {
             const input = document.getElementById('binaryInput').value.trim();
             const resultBox = document.getElementById('conversionResult');
-            
-            // Validation: Ensure input contains only 1s and 0s
             if (!/^[01]+$/.test(input)) {
-                resultBox.style.color = '#f87171'; // Error Red
+                resultBox.style.color = '#f87171';
                 resultBox.innerText = "Error: Input must contain only binary digits (0 or 1).";
                 return;
             }
-            
-            // Standard conversion logic mimicking true computer logic processing
             let decimalValue = 0;
-            let calculationString = "";
-            
             for (let i = 0; i < input.length; i++) {
                 const bit = parseInt(input[input.length - 1 - i]);
-                if (bit === 1) {
-                    decimalValue += Math.pow(2, i);
-                }
+                if (bit === 1) { decimalValue += Math.pow(2, i); }
             }
-            
             resultBox.style.color = 'var(--success)';
             resultBox.innerText = `Decimal Value: ${decimalValue} (Calculated successfully!)`;
         }
