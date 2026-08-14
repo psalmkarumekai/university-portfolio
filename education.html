@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CS Portfolio | Home</title>
+    <title>CS Portfolio | Education</title>
     <style>
         :root { --bg-color: #0f172a; --card-bg: #1e293b; --text-main: #f8fafc; --text-muted: #94a3b8; --primary: #38bdf8; --secondary: #818cf8; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
@@ -15,61 +15,26 @@
         .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; }
         .nav-links a.active, .nav-links a:hover { color: var(--primary); }
         main { flex: 1; max-width: 900px; width: 100%; margin: 8rem auto 4rem auto; padding: 0 2rem; }
-        h1 { font-size: 2.5rem; margin-bottom: 0.5rem; background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .subtitle { color: var(--primary); font-size: 1.2rem; font-weight: 600; margin-bottom: 2rem; }
-        p { color: var(--text-muted); margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 1.7; }
+        h1 { font-size: 2.5rem; margin-bottom: 1.5rem; background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        p { color: var(--text-muted); margin-bottom: 1.2rem; font-size: 1.1rem; }
         .highlight { color: var(--text-main); font-weight: 600; }
-        .statement-box { background-color: var(--card-bg); border-left: 4px solid var(--primary); padding: 2rem; border-radius: 0 12px 12px 0; margin-top: 2rem; }
-        .statement-box h3 { margin-bottom: 1rem; color: var(--text-main); }
+        .badge { background: rgba(56, 189, 248, 0.1); color: var(--primary); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.9rem; display: inline-block; margin-bottom: 1rem; border: 1px solid rgba(56, 189, 248, 0.2); }
+        .card { background-color: var(--card-bg); border: 1px solid #334155; padding: 2rem; border-radius: 12px; margin-top: 1.5rem; }
         footer { text-align: center; padding: 2rem; color: var(--text-muted); border-top: 1px solid #334155; font-size: 0.9rem; }
+
         /* --- RESPONSIVE CSS MEDIA QUERIES --- */
-
-/* For smaller desktop screens and tablets (under 768px wide) */
-@media (max-width: 768px) {
-    main {
-        margin: 7rem auto 3rem auto; /* Reduces spacing on medium screens */
-        padding: 0 1.5rem;
-    }
-    h1 {
-        font-size: 2rem; /* Shrinks the headline text so it doesn't wrap awkwardly */
-    }
-}
-
-/* For smartphones (under 600px wide) */
-@media (max-width: 600px) {
-    nav {
-        flex-direction: column; /* Stacks the logo on top of the links */
-        gap: 1rem;
-        text-align: center;
-        padding: 1rem;
-    }
-    .nav-links {
-        gap: 1rem; /* Closes the spacing between mobile menu buttons */
-        justify-content: center;
-        width: 100%;
-    }
-    main {
-        margin: 10rem auto 2rem auto; /* Shifts text down since the header stacked taller */
-        padding: 0 1rem;
-    }
-    h1 {
-        font-size: 1.75rem;
-    }
-    p {
-        font-size: 1rem; /* Highly readable body text size for mobile panels */
-    }
-    .card, .interactive-box {
-        padding: 1.2rem; /* Reduces inner card spacing to make room for content */
-    }
-    .tool-ui {
-        flex-direction: column; /* Stacks the binary input box on top of its button */
-        align-items: stretch;
-    }
-    input.tool-input, .tool-btn {
-        width: 100%; /* Makes forms expand cleanly across phone displays */
-    }
-}
-
+        @media (max-width: 768px) {
+            main { margin: 7rem auto 3rem auto; padding: 0 1.5rem; }
+            h1 { font-size: 2rem; }
+        }
+        @media (max-width: 600px) {
+            nav { flex-direction: column; gap: 1rem; text-align: center; padding: 1rem; }
+            .nav-links { gap: 1rem; justify-content: center; width: 100%; }
+            main { margin: 10rem auto 2rem auto; padding: 0 1rem; }
+            h1 { font-size: 1.75rem; }
+            p { font-size: 1rem; }
+            .card { padding: 1.2rem; }
+        }
     </style>
 </head>
 <body>
@@ -77,24 +42,21 @@
         <nav>
             <a href="index.html" class="logo">CS Applicant Portfolio</a>
             <ul class="nav-links">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="education.html">Education</a></li>
+                <li><a href="index.html">About</a></li>
+                <li><a href="education.html" class="active">Education</a></li>
                 <li><a href="interests.html">Coding Interests</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </nav>
     </header>
     <main>
-        <h1>Personal Statement</h1>
-        <div class="subtitle">Admissions Portfolio & Motivation Letter</div>
-        
-        <p>My journey into Computer Science is defined by deliberate choice and autonomous learning. While traditional academic pathways work for many, my path required me to take full ownership of my education, leading to my achievement of a <span class="highlight">GED Certificate</span>. This unconventional foundation forced me to develop rigorous self-discipline, time management skills, and a deeply analytical approach to personal milestones—qualities that are directly essential to solving complex engineering problems.</p>
-        
-        <p>My interest in technology goes far deeper than simply utilizing consumer software. I am fascinated by the core logic powering interactive systems, specifically **web application design and state management**. To prepare myself for university-level computing, I have focused heavily on building a solid understanding of logic systems, structural semantics, and native programming languages like JavaScript.</p>
-        
-        <div class="statement-box">
-            <h3>Academic Commitment</h3>
-            <p style="margin-bottom: 0;">I am seeking admission to your Computer Science program not just to learn how to write code, but to master structural software architecture, database scalability, and algorithmic theory. I am fully prepared to bring my proven capacity for independent, high-level research to your university classroom.</p>
+        <h1>Educational Background</h1>
+        <span class="badge">Alternative Academic Pathway</span>
+        <p>I hold a <span class="highlight">GED (General Educational Development) Certificate</span>, which reflects my independent learning skills, adaptability, and self-discipline.</p>
+        <p>Choosing an unconventional educational route required me to manage my own time effectively and take full responsibility for my academic progress—traits that are essential for success in an intensive Computer Science program.</p>
+        <div class="card">
+            <h3>Independent Tech Foundations</h3>
+            <p style="margin-top: 0.5rem; color: var(--text-muted);">To supplement my formal credentials, I actively engage with online coding curriculums, documentation, and logic puzzles to build a strong engineering baseline.</p>
         </div>
     </main>
     <footer>
