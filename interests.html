@@ -39,6 +39,54 @@
         .project-link:hover { text-decoration: underline; }
         
         footer { text-align: center; padding: 2rem; color: var(--text-muted); border-top: 1px solid #334155; font-size: 0.9rem; }
+        /* --- RESPONSIVE CSS MEDIA QUERIES --- */
+
+/* For smaller desktop screens and tablets (under 768px wide) */
+@media (max-width: 768px) {
+    main {
+        margin: 7rem auto 3rem auto; /* Reduces spacing on medium screens */
+        padding: 0 1.5rem;
+    }
+    h1 {
+        font-size: 2rem; /* Shrinks the headline text so it doesn't wrap awkwardly */
+    }
+}
+
+/* For smartphones (under 600px wide) */
+@media (max-width: 600px) {
+    nav {
+        flex-direction: column; /* Stacks the logo on top of the links */
+        gap: 1rem;
+        text-align: center;
+        padding: 1rem;
+    }
+    .nav-links {
+        gap: 1rem; /* Closes the spacing between mobile menu buttons */
+        justify-content: center;
+        width: 100%;
+    }
+    main {
+        margin: 10rem auto 2rem auto; /* Shifts text down since the header stacked taller */
+        padding: 0 1rem;
+    }
+    h1 {
+        font-size: 1.75rem;
+    }
+    p {
+        font-size: 1rem; /* Highly readable body text size for mobile panels */
+    }
+    .card, .interactive-box {
+        padding: 1.2rem; /* Reduces inner card spacing to make room for content */
+    }
+    .tool-ui {
+        flex-direction: column; /* Stacks the binary input box on top of its button */
+        align-items: stretch;
+    }
+    input.tool-input, .tool-btn {
+        width: 100%; /* Makes forms expand cleanly across phone displays */
+    }
+}
+
     </style>
 </head>
 <body>
