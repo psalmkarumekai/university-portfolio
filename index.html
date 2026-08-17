@@ -3,96 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CS Portfolio | Home</title>
+    <title>CS Portfolio | Home (3D)</title>
     <style>
-        :root { --bg-color: #0f172a; --card-bg: #1e293b; --text-main: #f8fafc; --text-muted: #94a3b8; --primary: #38bdf8; --secondary: #818cf8; }
+        :root { --bg-color: #0b0f19; --card-bg: rgba(30, 41, 59, 0.7); --text-main: #f8fafc; --text-muted: #94a3b8; --primary: #38bdf8; --secondary: #818cf8; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
-        header { background-color: #1e293b; position: fixed; width: 100%; top: 0; border-bottom: 1px solid #334155; }
+        body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; position: relative; }
+        
+        /* 3D WebGL Background Container */
+        #canvas3d { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
+
+        header { background-color: rgba(30, 41, 59, 0.85); backdrop-filter: blur(12px); position: fixed; width: 100%; top: 0; border-bottom: 1px solid rgba(51, 65, 85, 0.5); z-index: 100; }
         nav { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 2rem; }
         .logo { font-size: 1.25rem; font-weight: bold; color: var(--primary); text-decoration: none; }
         .nav-links { display: flex; list-style: none; gap: 2rem; }
-        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; transition: color 0.3s; }
         .nav-links a.active, .nav-links a:hover { color: var(--primary); }
-        main { flex: 1; max-width: 900px; width: 100%; margin: 8rem auto 4rem auto; padding: 0 2rem; }
-        h1 { font-size: 2.5rem; margin-bottom: 1.5rem; background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        p { color: var(--text-muted); margin-bottom: 1.2rem; font-size: 1.1rem; }
-        .highlight { color: var(--text-main); font-weight: 600; }
-        .card { background-color: var(--card-bg); border: 1px solid #334155; padding: 2rem; border-radius: 12px; margin-top: 1.5rem; }
-        footer { text-align: center; padding: 2rem; color: var(--text-muted); border-top: 1px solid #334155; font-size: 0.9rem; }
+        
+        main { flex: 1; max-width: 900px; width: 100%; margin: 8rem auto 4rem auto; padding: 0 2rem; position: relative; z-index: 10; }
+        h1 { font-size: 2.5rem; margin-bottom: 0.5rem; background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { color: var(--primary); font-size: 1.2rem; font-weight: 600; margin-bottom: 2rem; }
+        p { color: #cbd5e1; margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 1.7; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .highlight { color: var(--text-main); font-weight: 600; border-bottom: 1px dashed var(--primary); }
+        
+        .statement-box { background-color: var(--card-bg); border-left: 4px solid var(--primary); padding: 2rem; border-radius: 0 12px 12px 0; margin-top: 2rem; backdrop-filter: blur(8px); border-top: 1px solid rgba(255,255,255,0.05); border-right: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5); }
+        .statement-box h3 { margin-bottom: 1rem; color: var(--text-main); }
+        footer { text-align: center; padding: 2rem; color: var(--text-muted); border-top: 1px solid rgba(51, 65, 85, 0.3); font-size: 0.9rem; margin-top: auto; background: rgba(11, 15, 25, 0.8); backdrop-filter: blur(5px); z-index: 10; }
+
         /* --- RESPONSIVE CSS MEDIA QUERIES --- */
-
-/* For smaller desktop screens and tablets (under 768px wide) */
-@media (max-width: 768px) {
-    main {
-        margin: 7rem auto 3rem auto; /* Reduces spacing on medium screens */
-        padding: 0 1.5rem;
-    }
-    h1 {
-        font-size: 2rem; /* Shrinks the headline text so it doesn't wrap awkwardly */
-    }
-}
-
-/* For smartphones (under 600px wide) */
-@media (max-width: 600px) {
-    nav {
-        flex-direction: column; /* Stacks the logo on top of the links */
-        gap: 1rem;
-        text-align: center;
-        padding: 1rem;
-    }
-    .nav-links {
-        gap: 1rem; /* Closes the spacing between mobile menu buttons */
-        justify-content: center;
-        width: 100%;
-    }
-    main {
-        margin: 10rem auto 2rem auto; /* Shifts text down since the header stacked taller */
-        padding: 0 1rem;
-    }
-    h1 {
-        font-size: 1.75rem;
-    }
-    p {
-        font-size: 1rem; /* Highly readable body text size for mobile panels */
-    }
-    .card, .interactive-box {
-        padding: 1.2rem; /* Reduces inner card spacing to make room for content */
-    }
-    .tool-ui {
-        flex-direction: column; /* Stacks the binary input box on top of its button */
-        align-items: stretch;
-    }
-    input.tool-input, .tool-btn {
-        width: 100%; /* Makes forms expand cleanly across phone displays */
-    }
-}
-
+        @media (max-width: 768px) {
+            main { margin: 7rem auto 3rem auto; padding: 0 1.5rem; }
+            h1 { font-size: 2rem; }
+        }
+        @media (max-width: 600px) {
+            nav { flex-direction: column; gap: 1rem; text-align: center; padding: 1rem; }
+            .nav-links { gap: 1rem; justify-content: center; width: 100%; }
+            main { margin: 10rem auto 2rem auto; padding: 0 1rem; }
+            h1 { font-size: 1.75rem; }
+            p { font-size: 1rem; }
+            .statement-box { padding: 1.2rem; }
+        }
     </style>
 </head>
 <body>
+
+    <!-- 3D WEBGL SURFACE CANVAS -->
+    <canvas id="canvas3d"></canvas>
+
     <header>
         <nav>
             <a href="index.html" class="logo">CS Applicant Portfolio</a>
             <ul class="nav-links">
-                <li><a href="website.html" class="active">Home</a></li>
+                <li><a href="index.html" class="active">About</a></li>
                 <li><a href="education.html">Education</a></li>
                 <li><a href="interests.html">Coding Interests</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </nav>
     </header>
+    
     <main>
-        <h1>Aspiring Computer Science Student</h1>
-        <p>Welcome to my academic application portfolio. My name is <span class="highlight">Psalm Karumekai</span>, and I am a highly motivated aspiring programmer seeking admission into the Computer Science program.</p>
-        <p>Driven by a deep curiosity about how digital systems work, I have spent my personal time learning core technologies, building applications, and preparing myself for the rigorous academic environment of higher education.</p>
-        <div class="card">
-            <h3>Application Focus</h3>
-            <p style="margin-top: 0.5rem; color: var(--text-muted);">Dedicated to mastering software engineering principles, algorithmic logic, and modern web architectures to build scalable solutions for real-world problems.</p>
+        <h1>Personal Statement</h1>
+        <div class="subtitle">Admissions Portfolio & Motivation Letter</div>
+        
+        <p>My journey into Computer Science is defined by deliberate choice and autonomous learning. While traditional academic pathways work for many, my path required me to take full ownership of my education, leading to my achievement of a <span class="highlight">GED Certificate</span>. This unconventional foundation forced me to develop rigorous self-discipline, time management skills, and a deeply analytical approach to personal milestones—qualities that are directly essential to solving complex engineering problems.</p>
+        
+        <p>My interest in technology goes far deeper than simply utilizing consumer software. I am fascinated by the core logic powering interactive systems, specifically **web application design, state management, and real-time WebGL graphics arrays**. To prepare myself for university-level computing, I have focused heavily on building a solid understanding of logic systems, structural semantics, and native programming languages like JavaScript.</p>
+        
+        <div class="statement-box">
+            <h3>Academic Commitment</h3>
+            <p style="margin-bottom: 0;">I am seeking admission to your Computer Science program not just to learn how to write code, but to master structural software architecture, database scalability, and algorithmic theory. I am fully prepared to bring my proven capacity for independent, high-level research to your university classroom.</p>
         </div>
     </main>
+    
     <footer>
-        <p>&copy; 2026 University Application Portfolio.</p>
+        <p>&copy; 2026 University Application Portfolio. Graphics system initialized via Three.js (WebGL).</p>
     </footer>
+
+    <!-- DEPENDENCY: SECURE THREE.JS GRAPHICS STREAM ENGINE -->
+    <script src="https://cloudflare.com"></script>
+    <script>
+        // --- NATIVE 3D WEBGL GRAPHICS CONTROLLER ---
+        const canvas = document.querySelector('#canvas3d');
+        const scene = new THREE.Scene();
+        
+        // 1. Camera Initialization (Field of View, Aspect Ratio, Clipping planes)
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+
+        // 2. Hardware Accelerated Renderer Configuration
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        // 3. Mathematical Geometry Assembly (Generating 800 node coordinates)
+        const particlesCount = 800;
+        const posArray = new Float32Array(particlesCount * 3);
+
+        for(let i = 0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 12; // Spread matrix math across 3D coordinates
+        }
+
+        const particlesGeometry = new THREE.BufferGeometry();
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+        // 4. Material Shader Configuration (Color mapping and particle size points)
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.025,
+            color: '#38bdf8',
+            transparent: true,
+            opacity: 0.8,
+            blending: THREE.AdditiveBlending
+        });
+
+        // 5. Mesh Integration into global 3D environment space
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+
+        // 6. Dynamic Interactivity Tracking (Mouse Axis Capture)
+        let mouseX = 0;
+        let mouseY = 0;
+
+        document.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX / window.innerWidth) - 0.5;
+            mouseY = (event.clientY / window.innerHeight) - 0.5;
+        });
+
+        // 7. Core 3D Execution Loop running at maximum GPU frame rate
+        const clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            const elapsedTime = clock.getElapsedTime();
+
+            // Continuous rotation script calculations
+            particlesMesh.rotation.y = elapsedTime * 0.05;
+            particlesMesh.rotation.x = elapsedTime * 0.02;
+
+            // Interactive parallax shift tracking mouse coordinate delta properties
+            particlesMesh.position.x = mouseX * 2;
+            particlesMesh.position.y = -mouseY * 2;
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // 8. Dynamic Device Viewport Resize Adjustments
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
 </body>
 </html>
