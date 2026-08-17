@@ -3,75 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CS Portfolio | 3D Experience Room</title>
+    <title>CS Portfolio | True 3D Volumetric Studio</title>
     <style>
-        :root { --bg-color: #05070f; --primary: #38bdf8; --text-main: #f8fafc; }
+        :root { --bg-color: #060913; --primary: #38bdf8; --text-main: #f8fafc; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         body, html { width: 100%; height: 100%; overflow: hidden; background-color: var(--bg-color); color: var(--text-main); }
         
-        /* 3D WebGL Canvas Layer */
         #webgl-canvas { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; }
 
-        /* HUD Overlay Interface Layer */
         .hud-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; pointer-events: none; display: flex; flex-direction: column; justify-content: space-between; padding: 2rem; }
         header, footer { display: flex; justify-content: space-between; align-items: center; width: 100%; pointer-events: auto; }
-        .logo { font-size: 1.25rem; font-weight: bold; color: var(--primary); text-decoration: none; text-shadow: 0 0 10px rgba(56, 189, 248, 0.5); }
+        .logo { font-size: 1.25rem; font-weight: bold; color: var(--primary); text-decoration: none; text-shadow: 0 0 15px rgba(56, 189, 248, 0.6); }
         
-        /* Interactive Control Tips */
-        .instructions { text-align: center; color: #94a3b8; font-size: 0.95rem; background: rgba(15, 23, 42, 0.6); padding: 0.5rem 1rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(5px); }
+        .instructions { text-align: center; color: #94a3b8; font-size: 0.95rem; background: rgba(15, 23, 42, 0.7); padding: 0.6rem 1.2rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(10px); }
         .nav-indicator { position: absolute; bottom: 6rem; left: 50%; transform: translateX(-50%); display: flex; gap: 1rem; pointer-events: auto; }
-        .nav-btn { background: rgba(30, 41, 59, 0.8); border: 1px solid #334155; color: var(--text-main); padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.3s; }
-        .nav-btn:hover, .nav-btn.active { border-color: var(--primary); background: rgba(56, 189, 248, 0.1); box-shadow: 0 0 15px rgba(56, 189, 248, 0.3); }
+        .nav-btn { background: rgba(30, 41, 59, 0.85); border: 1px solid #334155; color: var(--text-main); padding: 0.7rem 1.5rem; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.3s; }
+        .nav-btn:hover, .nav-btn.active { border-color: var(--primary); background: rgba(56, 189, 248, 0.15); box-shadow: 0 0 20px rgba(56, 189, 248, 0.4); }
 
-        /* Dynamic 2D Information Panel inside 3D Viewport */
-        .info-panel { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 550px; width: 90%; background: rgba(15, 23, 42, 0.85); border: 2px solid var(--primary); padding: 2.5rem; border-radius: 16px; box-shadow: 0 0 30px rgba(56, 189, 248, 0.2); backdrop-filter: blur(15px); pointer-events: auto; opacity: 1; transition: opacity 0.5s ease, transform 0.5s ease; z-index: 20; display: none; }
+        .info-panel { position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%); max-width: 500px; width: 85%; background: rgba(10, 15, 30, 0.9); border: 2px solid var(--primary); padding: 2rem; border-radius: 12px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8); backdrop-filter: blur(20px); pointer-events: auto; display: none; z-index: 20; }
         .info-panel.visible { display: block; animation: panelFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         .close-btn { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: #94a3b8; font-size: 1.2rem; cursor: pointer; }
-        .close-btn:hover { color: #f8fafc; }
         
-        h2 { font-size: 1.8rem; margin-bottom: 1rem; color: #f8fafc; background: linear-gradient(to right, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        p { color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; margin-bottom: 1rem; }
-        .badge { display: inline-block; background: rgba(56, 189, 248, 0.1); color: var(--primary); border: 1px solid rgba(56, 189, 248, 0.2); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.85rem; margin-bottom: 1rem; font-weight: 600; }
+        h2 { font-size: 1.7rem; margin-bottom: 0.8rem; background: linear-gradient(to right, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        p { color: #cbd5e1; font-size: 1rem; line-height: 1.6; margin-bottom: 0.8rem; }
+        .badge { display: inline-block; background: rgba(56, 189, 248, 0.1); color: var(--primary); border: 1px solid rgba(56, 189, 248, 0.2); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.8rem; margin-bottom: 0.8rem; font-weight: 600; }
 
-        @keyframes panelFade { from { opacity: 0; transform: translate(-50%, -45%); } to { opacity: 1; transform: translate(-50%, -50%); } }
+        @keyframes panelFade { from { opacity: 0; transform: translate(-50%, -43%); } to { opacity: 1; transform: translate(-50%, -50%); } }
     </style>
 </head>
 <body>
 
-    <!-- 3D WEBGL GRAPHICS INTERFACE LAYER -->
     <canvas id="webgl-canvas"></canvas>
 
-    <!-- HEADS UP DISPLAY OVERLAY INTERFACE -->
     <div class="hud-overlay">
         <header>
-            <a href="#" class="logo">CS Applicant Matrix 3D</a>
-            <div class="instructions">Click and drag background to look around. Click 3D Nodes.</div>
+            <a href="#" class="logo">CS Applicant Studio 3D</a>
+            <div class="instructions">Move mouse across display to pivot spatial depth. Click buttons below.</div>
         </header>
 
-        <!-- Dynamic Content Panels Triggered by 3D Interaction -->
+        <!-- Dynamic Content Overlays -->
         <div id="panel-about" class="info-panel">
             <button class="close-btn" onclick="closePanel()">✕</button>
             <h2>Personal Statement</h2>
-            <p>My journey into Computer Science is defined by deliberate choice and autonomous learning. While traditional academic pathways work for many, my path required me to take full ownership of my education, leading to my achievement of a <strong>GED Certificate</strong>.</p>
-            <p>This unconventional foundation forced me to develop rigorous self-discipline, time management skills, and a deeply analytical approach to personal milestones—qualities that are directly essential to solving complex engineering problems.</p>
+            <p>My journey into Computer Science is defined by deliberate choice and autonomous learning. Coming from an unconventional pathway, completing my <strong>GED Certificate</strong> directly required me to develop deep self-discipline, timeline logic, and strict task management patterns.</p>
         </div>
 
         <div id="panel-education" class="info-panel">
             <button class="close-btn" onclick="closePanel()">✕</button>
-            <h2>Educational Background</h2>
-            <span class="badge">Alternative Academic Pathway</span>
-            <p>Holding a GED Certificate reflects my strong independent learning skills, adaptability, and self-discipline.</p>
-            <p>Choosing an unconventional educational route required me to manage my own time effectively and take full responsibility for my academic progress—traits that are essential for success in an intensive, high-level university programming environment.</p>
+            <h2>Educational Journey</h2>
+            <span class="badge">GED Pathway Profile</span>
+            <p>A non-traditional route proves my capacity for self-regulated, aggressive engineering workflows. Rather than adhering strictly to rigid lesson pipelines, I focus heavily on independently hunting down computing architectures.</p>
         </div>
 
         <div id="panel-interests" class="info-panel">
             <button class="close-btn" onclick="closePanel()">✕</button>
-            <h2>Coding & App Development</h2>
-            <p>My technical passion lies at the intersection of logical problem-solving and software engineering. I focus heavily on learning how client-side applications manage data states, asynchronous network streams, and mathematical matrix arrays natively.</p>
-            <p>This entire portfolio ecosystem represents my initial engineering blocks, practicing WebGL shaders and real-time graphics rendering paths.</p>
+            <h2>Advanced Logic Focus</h2>
+            <p>I target multi-dimensional scripting spaces, system state synchronization, and native matrix operations. This environment utilizes real-time mathematical shaders calculating depth shadows natively across your physical graphics hardware chipsets.</p>
         </div>
 
-        <!-- 3D Space Navigation Controller -->
         <div class="nav-indicator">
             <button id="btn-about" class="nav-btn" onclick="focusNode(0)">About</button>
             <button id="btn-education" class="nav-btn" onclick="focusNode(1)">Education</button>
@@ -79,83 +68,98 @@
         </div>
 
         <footer>
-            <p style="font-size: 0.85rem; color: #94a3b8;">&copy; 2026 CS Admission Suite. Core architecture built via Three.js (WebGL Matrix).</p>
+            <p style="font-size: 0.85rem; color: #64748b;">&copy; 2026 CS Production Node. Multi-dimensional shading configured cleanly via WebGL Mesh structures.</p>
         </footer>
     </div>
 
-    <!-- CORE GRAPHICS DEPENDENCY INJECTIONS -->
+    <!-- CORE 3D LIBRARY CONNECTIONS -->
     <script src="https://cloudflare.com"></script>
     <script>
-        // --- 3D ENVIRONMENT INITIALIZATION ---
         const canvas = document.querySelector('#webgl-canvas');
         const scene = new THREE.Scene();
-        scene.fog = new THREE.FogExp2('#05070f', 0.15); // Enhances atmospheric depth field perception
+        scene.background = new THREE.Color('#060913');
 
-        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
-        camera.position.set(0, 0, 7);
+        // Perspective Camera with aggressive focal distortion to emphasize three-dimensional distance
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.set(0, 1.5, 6);
 
         const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.shadowMap.enabled = true; // Essential: Turns on shadow generation computations
 
-        // --- GENERATING 3D LIGHT SOURCE ARRAYS ---
-        const ambientLight = new THREE.AmbientLight('#ffffff', 0.4);
-        scene.add(ambientLight);
+        // --- THE 3D GROUND PLANE (Perception Anchor) ---
+        // This acts as a floor grid so your eyes instantly recognize floor depth and height
+        const floorGeo = new THREE.PlaneGeometry(30, 30, 30, 30);
+        const floorMat = new THREE.MeshStandardMaterial({ 
+            color: '#0a0f24', 
+            wireframe: true, // Grid pattern highlights vanishing lines towards the horizon
+            roughness: 0.8 
+        });
+        const floor = new THREE.Mesh(floorGeo, floorMat);
+        floor.rotation.x = -Math.PI / 2; // Flat horizon drop rotation orientation
+        floor.position.y = -1.5;
+        scene.add(floor);
 
-        const pointLight = new THREE.PointLight('#38bdf8', 2, 20);
-        pointLight.position.set(0, 5, 5);
-        scene.add(pointLight);
-
-        // --- DEEP ENVIRONMENT HULL PARTICLES (STAR MATRICES) ---
-        const starsGeometry = new THREE.BufferGeometry();
-        const starsCount = 1500;
-        const starPositions = new Float32Array(starsCount * 3);
-
-        for (let i = 0; i < starsCount * 3; i++) {
-            starPositions[i] = (Math.random() - 0.5) * 30;
-        }
-        starsGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
-        const starsMaterial = new THREE.PointsMaterial({ color: '#64748b', size: 0.03, transparent: true, opacity: 0.6 });
-        const starField = new THREE.Points(starsGeometry, starsMaterial);
-        scene.add(starField);
-
-        // --- PROGRAMMING INTERACTIVE 3D MESH NODE SPHERES ---
-        // These represent the physical pages of your site inside the 3D space
+        // --- SOLID 3D MESH BLOCKS (No Flat Lines) ---
+        // Replacing text/lines with real volumetric geometric objects that reflect light
         const nodesData = [
-            { name: 'about', color: '#38bdf8', x: -2.5, y: 0, z: 0 },
-            { name: 'education', color: '#818cf8', x: 0, y: 1.5, z: -1 },
-            { name: 'interests', color: '#34d399', x: 2.5, y: 0, z: 0 }
+            { name: 'about', geometry: new THREE.BoxGeometry(0.9, 0.9, 0.9), color: '#38bdf8', x: -2, y: 0.2, z: -1 },
+            { name: 'education', geometry: new THREE.CylinderGeometry(0.5, 0.5, 1, 4), color: '#818cf8', x: 0, y: 0.6, z: -2 },
+            { name: 'interests', geometry: new THREE.TorusKnotGeometry(0.4, 0.12, 60, 8), color: '#34d399', x: 2, y: 0.4, z: -1 }
         ];
 
         const nodeMeshes = [];
-        const nodeGroup = new THREE.Group();
-
         nodesData.forEach((data, index) => {
-            // High-resolution geometric structure
-            const geometry = new THREE.IcosahedronGeometry(0.7, 2);
-            
-            // Material properties that interact with scene lighting arrays
+            // MeshStandardMaterial handles light physics, reflections, and face shade calculations
             const material = new THREE.MeshStandardMaterial({
                 color: data.color,
-                wireframe: true,
-                roughness: 0.2,
-                metalness: 0.8
+                roughness: 0.1,
+                metalness: 0.7,
+                flatShading: true // Hard angular faces show explicit 3D orientation alterations
             });
-            
-            const mesh = new THREE.Mesh(geometry, material);
+            const mesh = new THREE.Mesh(data.geometry, material);
             mesh.position.set(data.x, data.y, data.z);
+            mesh.castShadow = true;
             mesh.userData = { id: data.name, index: index };
-            
-            nodeGroup.add(mesh);
+            scene.add(mesh);
             nodeMeshes.push(mesh);
         });
-        scene.add(nodeGroup);
 
-        // Connect the nodes with structural vector lines
-        const lineMaterial = new THREE.LineBasicMaterial({ color: '#1e293b', transparent: true, opacity: 0.4 });
-        const lineGeometry = new THREE.BufferGeometry().setFromPoints([
-            nodeMeshes[0].position, nodeMeshes[1].position, nodeMeshes[2].position, nodeMeshes[0].position
-        ]);
-        const connectionLines = new THREE.Line(lineGeometry, lineMaterial);
-        scene.add(connectionLines);
+        // --- HARD REALISTIC LIGHTING SYSTEM (Creates Depth Shadows) ---
+        const ambientLight = new THREE.AmbientLight('#11172e', 1.5);
+        scene.add(ambientLight);
+
+        // High intensity directional spot source acting like a physical lamp projecting shadows
+        const spotlight = new THREE.SpotLight('#ffffff', 4);
+        spotlight.position.set(0, 8, 4);
+        spotlight.angle = Math.PI / 4;
+        spotlight.penumbra = 0.5;
+        spotlight.castShadow = true;
+        scene.add(spotlight);
+
+        // Subtle secondary accent lamp mapping color highlights onto sides of solid shapes
+        const pointLight = new THREE.PointLight('#38bdf8', 2, 10);
+        pointLight.position.set(-3, -0.5, 2);
+        scene.add(pointLight);
+
+        // --- DYNAMIC CONTROL INTERPOLATION ---
+        let mouseX = 0, mouseY = 0;
+        let cameraTargetPos = new THREE.Vector3(0, 1.5, 6);
+        let lookAtTarget = new THREE.Vector3(0, 0, -1);
+        let currentLookAt = new THREE.Vector3(0, 0, -1);
+
+        document.addEventListener('mousemove', (e) => {
+            // Map window pixels onto mathematical viewport coordinates (-0.5 to +0.5)
+            mouseX = (e.clientX / window.innerWidth) - 0.5;
+            mouseY = (e.clientY / window.innerHeight) - 0.5;
+        });
+
+        function focusNode(index) {
+            const mesh = nodeMeshes[index];
+            const data = nodesData[index];
+            
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(`btn-${data.name}`).classList.add('active');
+            // Move the camera lens physically deep into the room close to the chosen shapecameraTargetPos.set(mesh.position.x, mesh.position.y + 0.4, mesh.position.z + 2);lookAtTarget.copy(mesh.position);document.querySelectorAll('.info-panel').forEach(p => p.classList.remove('visible'));document.getElementById(panel-${data.name}).classList.add('visible');}function closePanel() {document.querySelectorAll('.info-panel').forEach(p => p.classList.remove('visible'));document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));cameraTargetPos.set(0, 1.5, 6);lookAtTarget.set(0, 0, -1);}// --- HIGH FRAME RATE REDRAW SYSTEM ---const animate = () => {requestAnimationFrame(animate);// Continually spin the solid shapes on their coordinate polesnodeMeshes.forEach(mesh => {mesh.rotation.y += 0.008;mesh.rotation.x += 0.004;});// PARALLAX SHIFT: Moving the mouse physically shifts the camera position left/right/up/down// This force-reveals the different hidden sides of the solid structureslet dynamicCamX = cameraTargetPos.x + (mouseX * 2.5);let dynamicCamY = cameraTargetPos.y + (-mouseY * 1.5);camera.position.x += (dynamicCamX - camera.position.x) * 0.05;camera.position.y += (dynamicCamY - camera.position.y) * 0.05;camera.position.z += (cameraTargetPos.z - camera.position.z) * 0.05;currentLookAt.lerp(lookAtTarget, 0.05);camera.lookAt(currentLookAt);renderer.render(scene, camera);};animate();window.addEventListener('resize', () => {camera.aspect = window.innerWidth / window.innerHeight;camera.updateProjectionMatrix();renderer.setSize(window.innerWidth, window.innerHeight);});
 
