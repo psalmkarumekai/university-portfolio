@@ -348,6 +348,46 @@
                 <div class="project-link">Launch Live Tracker &rarr;</div>
             </a>
         </div>
+                <!-- ================= TOWER OF HANOI PROFESSOR ATTRACTION SECTION ================= -->
+        <h2>Live Demonstration: Algorithmic Memory Stacks</h2>
+        <p>To demonstrate my understanding of mathematical induction, graph traversal bounds, and physical stack data structures, I engineered a native client-side implementation of the <i>Tower of Hanoi</i> puzzle.</p>
+        
+        <div class="interactive-box" style="border-color: var(--secondary);">
+            <h4 style="color: var(--secondary); font-size: 1.15rem; margin-bottom: 0.5rem;">The Tower of Hanoi Data Structure Playground</h4>
+            <p style="font-size: 0.95rem; margin-bottom: 1rem;">
+                <b>Mathematical Constraint:</b> You cannot place a larger disc on top of a smaller disc. 
+                Goal: Move the entire stack from Rod A to Rod C in the minimum number of steps ($2^n - 1 = 7$ moves).
+            </p>
+
+            <!-- Active Visual Gameboard Interface Grid -->
+            <style>
+                .hanoi-canvas { display: flex; justify-content: space-around; background: #0b0f19; padding: 2rem 1rem; border-radius: 8px; border: 1px solid #334155; min-height: 180px; align-items: flex-end; margin-bottom: 1rem; }
+                .hanoi-rod { display: flex; flex-direction: column-reverse; align-items: center; width: 30%; height: 130px; background: linear-gradient(to top, #334155 4px, transparent 4px); position: relative; cursor: pointer; border-radius: 4px; transition: background 0.2s; }
+                .hanoi-rod:hover { background: rgba(129, 140, 248, 0.05); }
+                .hanoi-rod.selected-rod { background: rgba(56, 189, 248, 0.1); border: 1px dashed var(--primary); }
+                .hanoi-rod::before { content: ''; position: absolute; bottom: 4px; width: 6px; height: 110px; background: #334155; border-radius: 3px; z-index: 1; }
+                .hanoi-disc { height: 20px; border-radius: 4px; z-index: 2; margin-bottom: 2px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; color: #0f172a; transition: transform 0.2s; }
+                .disc-1 { width: 40px; background-color: #38bdf8; }
+                .disc-2 { width: 65px; background-color: #818cf8; }
+                .disc-3 { width: 90px; background-color: #34d399; }
+                .hanoi-controls { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-top: 1rem; }
+                .hanoi-metric { font-size: 1rem; font-weight: bold; color: var(--text-main); }
+            </style>
+
+            <div class="hanoi-canvas">
+                <div class="hanoi-rod" id="rod-0" onclick="selectHanoiRod(0)"></div>
+                <div class="hanoi-rod" id="rod-1" onclick="selectHanoiRod(1)"></div>
+                <div class="hanoi-rod" id="rod-2" onclick="selectHanoiRod(2)"></div>
+            </div>
+
+            <div class="hanoi-controls">
+                <div class="hanoi-metric" id="hanoiMoveCounter">Moves Registered: 0 / Min: 7</div>
+                <div class="hanoi-metric" id="hanoiStatus" style="color: var(--secondary);">System State: Idle</div>
+                <button class="tool-btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;" onclick="resetHanoiGame()">Reset Rod Stacks</button>
+            </div>
+        </div>
+        <!-- ============================================================================== -->
+
     </main>
 
     <footer>
@@ -388,6 +428,113 @@
             resultDisplay.style.color = 'var(--success)';
             resultDisplay.innerHTML = `Decimal Value: <span>${decimalOutcome}</span>`;
         }
+                /**
+         * 🗼 3. Theoretical Computer Science Engine: Tower of Hanoi Stack Machine
+         */
+        // Representing rods array architectures natively as discrete LIFO Stacks (Last-In, First-Out)
+        let rodMemoryStacks = [[3, 2, 1], [], []]; 
+        let selectedRodIndex = null;
+        let hanoiMoveCount = 0;
+        const hanoiMinMoves = 7;
+
+        function renderHanoiEngine() {
+            for (let r = 0; r < 3; r++) {
+                const rodDomElement = document.getElementById(`rod-${r}`);
+                rodDomElement.innerHTML = ''; // Wipes old node structures from the layout map
+                
+                // Track state selections styles indicators
+                if (selectedRodIndex === r) {
+                    rodDomElement.classList.add('selected-rod');
+                } else {
+                    rodDomElement.classList.remove('selected-rod');
+                }
+
+                // Render dynamic memory elements down to visual DOM items
+                rodMemoryStacks[r].forEach(discSize => {
+                    const discNode = document.createElement('div');
+                    discNode.className = `hanoi-disc disc-${discSize}`;
+                    discNode.innerText = discSize;
+                    rodDomElement.appendChild(discNode);
+                });
+            }
+            
+            document.getElementById('hanoiMoveCounter').innerHTML = `Moves Registered: <span>${hanoiMoveCount}</span> / Min: ${hanoiMinMoves}`;
+        }
+
+        function selectHanoiRod(clickedIndex) {
+            const statusDisplay = document.getElementById('hanoiStatus');
+            
+            // State Sequence A: Picking up an item from a source rod stack node
+            if (selectedRodIndex === null) {
+                if (rodMemoryStacks[clickedIndex].length === 0) {
+                    statusDisplay.style.color = '#ef4444';
+                    statusDisplay.innerText = "Invalid Op: Source stack is empty.";
+                    return;
+                }
+                selectedRodIndex = clickedIndex;
+                statusDisplay.style.color = 'var(--primary)';
+                statusDisplay.innerText = `Selected Rod ${String.fromCharCode(65 + clickedIndex)}...`;
+            } 
+            // State Sequence B: Evaluating spatial boundaries constraint configurations on target rod
+            else {
+                const sourceStack = rodMemoryStacks[selectedRodIndex];
+                const targetStack = rodMemoryStacks[clickedIndex];
+
+                if (selectedRodIndex !== clickedIndex) {
+                    const movingDisc = sourceStack[sourceStack.length - 1];
+                    const targetTopDisc = targetStack[targetStack.length - 1];
+
+                    // Core Mathematical Checkpoint Constraint Loop validation
+                    if (targetTopDisc && movingDisc > targetTopDisc) {
+                        statusDisplay.style.color = '#ef4444';
+                        statusDisplay.innerText = "Constraint Violation: Larger disc on smaller.";
+                        selectedRodIndex = null;
+                        renderHanoiEngine();
+                        return;
+                    }
+
+                    // Pop element matrix point data across LIFO stacks indexes pointers
+                    targetStack.push(sourceStack.pop());
+                    hanoiMoveCount++;
+                    statusDisplay.style.color = 'var(--success)';
+                    statusDisplay.innerText = `Moved disk safely to Rod ${String.fromCharCode(65 + clickedIndex)}`;
+                } else {
+                    statusDisplay.style.color = var(--text-muted);
+                    statusDisplay.innerText = "Selection canceled.";
+                }
+
+                selectedRodIndex = null; // Flush selections register flags
+                checkHanoiVictoryCondition();
+            }
+            renderHanoiEngine();
+        }
+
+        function checkHanoiVictoryCondition() {
+            const statusDisplay = document.getElementById('hanoiStatus');
+            // Success Milestone condition checker evaluation loop
+            if (rodMemoryStacks[2].length === 3) {
+                statusDisplay.style.color = 'var(--success)';
+                if (hanoiMoveCount === hanoiMinMoves) {
+                    statusDisplay.innerHTML = "🏆 Optimal Solution Matrix Achieved! Perfect O(2^n-1) score.";
+                } else {
+                    statusDisplay.innerHTML = "🎉 Puzzle Solved! Challenge target: Achieve the optimal 7-move limit.";
+                }
+            }
+        }
+
+        function resetHanoiGame() {
+            rodMemoryStacks = [[3, 2, 1], [], []];
+            selectedRodIndex = null;
+            hanoiMoveCount = 0;
+            const statusDisplay = document.getElementById('hanoiStatus');
+            statusDisplay.style.color = 'var(--secondary)';
+            statusDisplay.innerText = "System State: Reset complete.";
+            renderHanoiEngine();
+        }
+
+        // Bootstrap load sequence
+        renderHanoiEngine();
+
     </script>
 </body>
 </html>
