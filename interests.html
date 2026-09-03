@@ -8,6 +8,7 @@
         :root { 
             --bg-color: #0f172a; 
             --card-bg: #1e293b; 
+            --card-bg-hover: #24324d;
             --text-main: #f8fafc; 
             --text-muted: #94a3b8; 
             --primary: #38bdf8; 
@@ -178,6 +179,7 @@
             min-height: 1.8rem; 
         }
         
+        /* Interactive Project Cards Component Grid */
         .grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
@@ -185,21 +187,26 @@
             margin-top: 1.5rem; 
         }
         
+        /* Transformed Card into fully interactive anchor navigation wrappers */
         .project-card { 
             background: var(--card-bg); 
             border: 1px solid #334155; 
             padding: 1.8rem; 
             border-radius: 8px; 
-            transition: transform 0.2s, border-color 0.2s; 
+            text-decoration: none; /* Strips standard anchor styling */
+            color: inherit;
+            transition: transform 0.2s, border-color 0.2s, background-color 0.2s; 
             display: flex; 
             flex-direction: column; 
             justify-content: space-between; 
             gap: 1.5rem;
+            cursor: pointer;
         }
         
         .project-card:hover { 
             transform: translateY(-3px); 
             border-color: var(--secondary); 
+            background-color: var(--card-bg-hover);
         }
         
         .project-tags { 
@@ -220,7 +227,6 @@
         
         .project-link { 
             color: var(--primary); 
-            text-decoration: none; 
             font-weight: 600; 
             font-size: 0.95rem; 
             display: inline-flex; 
@@ -228,8 +234,9 @@
             gap: 0.25rem; 
         }
         
-        .project-link:hover { 
+        .project-card:hover .project-link { 
             text-decoration: underline; 
+            color: var(--secondary);
         }
         
         footer { 
@@ -250,7 +257,7 @@
         }
         
         @media (max-width: 640px) {
-            .menu-toggle { display: flex; } /* Show responsive mobile toggle button */
+            .menu-toggle { display: flex; } 
             
             .nav-links {
                 display: none;
@@ -267,7 +274,7 @@
                 box-shadow: 0 10px 15px rgba(0,0,0,0.4);
             }
             
-            .nav-links.mobile-open { display: flex; } /* Toggle script target class hook */
+            .nav-links.mobile-open { display: flex; } 
             
             main { margin: 5.5rem auto 2rem auto; padding: 0 1rem; }
             h1 { font-size: 1.8rem; }
@@ -306,9 +313,4 @@
         
         <div class="interactive-box">
             <h4 style="color: var(--primary); font-size: 1.15rem; margin-bottom: 0.5rem;">Interactive Binary-to-Decimal Converter</h4>
-            <p style="font-size: 0.95rem; margin-bottom: 0.5rem;">Input an 8-bit binary number (e.g., 10101010) to see base-2 parsing calculations live:</p>
-            <div class="tool-ui">
-                <input type="text" id="binaryInput" class="tool-input" placeholder="00000000" maxlength="8">
-                <button class="tool-btn" onclick="convertBinary()">Execute Calculation</button>
-            </div>
-Decimal Value: 0Functional Engineering ProjectsBelow are active coding targets and functional web applications designed to test my logic systems, algorithmic scaling, and modern web architectures.Vanilla Multi-Page PortfolioAn admissions framework incorporating fluid, responsive layout viewports across independent HTML pages cleanly.HTML5CSS GridVanilla JSActive Live Setup •Algorithmic Logic TrackerAn application module built to handle evaluation strings, numerical base conversion, and mathematical logic checking.AlgorithmsBase-2 LogicState ControlsActive Development •© 2026 CS Applicant Portfolio. Built with clean, structural Web Standards./*** 📱 1. Mobile Menu Responsive Toggle Mechanism*/function toggleMenu() {const navLinks = document.getElementById('navLinks');navLinks.classList.toggle('mobile-open');}/*** 🧠 2. Algorithmic State Controller Layer: Binary Parsing Logic*/function convertBinary() {const inputVal = document.getElementById('binaryInput').value.trim();const resultDisplay = document.getElementById('conversionResult');// Regex validation checking string format layoutif (!/^[01]+$/.test(inputVal)) {resultDisplay.style.color = '#ef4444'; // Error RedresultDisplay.innerText = "Error: Input must contain bits only (0 or 1).";return;}// Core Base-2 parsing operation logic processinglet decimalOutcome = parseInt(inputVal, 2);resultDisplay.style.color = 'var(--success)';resultDisplay.innerHTML = Decimal Value: <span>${decimalOutcome}</span>;}
+Input an 8-bit binary number (e.g., 10101010) to see base-2 parsing calculations live:Execute CalculationDecimal Value: 0Functional Engineering ProjectsBelow are active coding targets and functional web applications designed to test my logic systems, algorithmic scaling, and modern web architectures.Vanilla Multi-Page PortfolioAn admissions framework incorporating fluid, responsive layout viewports across independent HTML pages cleanly.HTML5CSS GridVanilla JSView Project Details →Algorithmic Logic TrackerAn application module built to handle evaluation strings, numerical base conversion, and mathematical logic checking.AlgorithmsBase-2 LogicState ControlsLaunch Live Tracker →© 2026 CS Applicant Portfolio. Built with clean, structural Web Standards./*** 📱 1. Mobile Menu Responsive Toggle Mechanism*/function toggleMenu() {const navLinks = document.getElementById('navLinks');navLinks.classList.toggle('mobile-open');}/*** 🧠 2. Algorithmic State Controller Layer: Binary Parsing Logic*/function convertBinary() {const inputVal = document.getElementById('binaryInput').value.trim();const resultDisplay = document.getElementById('conversionResult');if (!/^[01]+$/.test(inputVal)) {resultDisplay.style.color = '#ef4444';resultDisplay.innerText = "Error: Input must contain bits only (0 or 1).";return;}let decimalOutcome = parseInt(inputVal, 2);resultDisplay.style.color = 'var(--success)';resultDisplay.innerHTML = Decimal Value: <span>${decimalOutcome}</span>;}
