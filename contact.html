@@ -214,11 +214,19 @@
         <h1>Get In Touch</h1>
         <p>Thank you for reviewing my profile. Please use the interface below if you wish to extend an invitation for an admissions interview or share feedback.</p>
         
-        <!-- 🔒 Native Form: Trapped Locally, Zero Network Failures -->
-        <form id="secureMailForm" onsubmit="transmitViaMailto(event)">
-            <input type="text" id="senderName" placeholder="Your Name" required>
-            <input type="email" id="senderEmail" placeholder="Your Email Address" required>
-            <textarea id="senderMessage" rows="5" placeholder="Your Message" required></textarea>
+        <!-- ⚡ FIXED: Native HTML form routing straight to Web3Forms submission engine -->
+        <form action="https://api.web3forms.com/submit" method="POST">
+            <!-- Hidden configuration properties -->
+            <input type="hidden" name="access_key" value="ac24ee8c-0dc5-4446-83a3-f33bd44cbe46">
+            <input type="hidden" name="subject" value="New University Portfolio Inquiry!">
+            <input type="checkbox" name="botcheck" style="display: none;">
+
+            <!-- Optional: Redirect back to your local portfolio page after successfully submitting -->
+            <input type="hidden" name="redirect" value="https://web3forms.com">
+
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email Address" required>
+            <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
             
             <button type="submit">Send Message</button>
         </form>
@@ -229,38 +237,11 @@
 
     <script>
         /**
-         * 📱 1. Mobile Menu Toggle Logic
+         * 📱 Mobile Menu Toggle Logic
          */
         function toggleMenu() {
             const navLinks = document.getElementById('navLinks');
             navLinks.classList.toggle('mobile-open');
-        }
-
-        /**
-         * ✉️ 2. Unbreakable Local Email Compiling Protocol
-         */
-        function transmitViaMailto(event) {
-            event.preventDefault(); // Stop page from blanking out or trying to find a server
-
-            // ⚠️ TASK: Replace the template string layout below with your actual Gmail account address
-            const targetInbox = "psalm24shorty.t@gmail.com"; 
-            
-            // Gather input node string variables
-            const name = document.getElementById('senderName').value.trim();
-            const email = document.getElementById('senderEmail').value.trim();
-            const rawMessage = document.getElementById('senderMessage').value.trim();
-            
-            const emailSubject = encodeURIComponent("New University Portfolio Inquiry!");
-            
-            // Format email body text cleanly with linebreaks (%0D%0A)
-            const emailBody = encodeURIComponent(
-                `Name: ${name}\n` +
-                `Email: ${email}\n\n` +
-                `Message:\n${rawMessage}`
-            );
-
-            // Construct the ultimate unbreakable browser routing hyperlink
-            window.location.href = `mailto:${targetInbox}?subject=${emailSubject}&body=${emailBody}`;
         }
     </script>
 </body>
