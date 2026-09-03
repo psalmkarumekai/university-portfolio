@@ -55,7 +55,6 @@
             text-decoration: none; 
         }
         
-        /* Mobile Hamburger Toggle */
         .menu-toggle {
             display: none;
             flex-direction: column;
@@ -122,7 +121,7 @@
         input, textarea { 
             width: 100%; 
             padding: 0.8rem; 
-            background-color: var(--card-bg); /* Fixed container background contrast */
+            background-color: var(--card-bg); 
             border: 1px solid #334155; 
             color: var(--text-main); 
             border-radius: 6px; 
@@ -149,13 +148,6 @@
         
         button:hover { 
             opacity: 0.9; 
-        }
-        
-        .status-msg { 
-            margin-top: 1rem; 
-            font-size: 1.1rem; 
-            font-weight: 600; 
-            display: none; 
         }
         
         footer { 
@@ -222,21 +214,22 @@
         <h1>Get In Touch</h1>
         <p>Thank you for reviewing my profile. Please use the interface below if you wish to extend an invitation for an admissions interview or share feedback.</p>
         
-        <!-- SECURE ASYNCHRONOUS FORM PROCESSOR -->
-        <form id="contactForm" method="POST">
-            <!-- ⚠️ TASK: Replace the value string below with your official Web3Forms key -->
+        <!-- ⚡ FIXED: Native HTML form routing straight to Web3Forms submission engine -->
+        <form action="https://api.web3forms.com/submit" method="POST">
+            <!-- Hidden configuration properties -->
             <input type="hidden" name="access_key" value="ac24ee8c-0dc5-4446-83a3-f33bd44cbe46">
             <input type="hidden" name="subject" value="New University Portfolio Inquiry!">
             <input type="checkbox" name="botcheck" style="display: none;">
+
+            <!-- Optional: Redirect back to your local portfolio page after successfully submitting -->
+            <input type="hidden" name="redirect" value="https://web3forms.com">
 
             <input type="text" name="name" placeholder="Your Name" required>
             <input type="email" name="email" placeholder="Your Email Address" required>
             <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
             
-            <button type="submit" id="submitBtn">Send Message</button>
+            <button type="submit">Send Message</button>
         </form>
-        
-        <div id="formStatus" class="status-msg"></div>
     </main>
     <footer>
         <p>&copy; 2026 CS Applicant Portfolio. Built with clean, structural Web Standards.</p>
@@ -244,60 +237,12 @@
 
     <script>
         /**
-         * 📱 1. Mobile Menu Toggle
+         * 📱 Mobile Menu Toggle Logic
          */
         function toggleMenu() {
             const navLinks = document.getElementById('navLinks');
             navLinks.classList.toggle('mobile-open');
         }
-
-        /**
-         * ✉️ 2. Asynchronous Form Delivery System
-         */
-        const form = document.getElementById('contactForm');
-        const statusBox = document.getElementById('formStatus');
-        const submitBtn = document.getElementById('submitBtn');
-
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            submitBtn.innerText = "Transmitting Message...";
-            submitBtn.disabled = true;
-
-            const formData = new FormData(form);
-            const object = Object.fromEntries(formData);
-            const json = JSON.stringify(object);
-
-            // ⚠️ FIXED: Corrected the endpoint URL path to target the direct submission API link
-            fetch('https://web3forms.com', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: json
-            })
-            .then(async (response) => {
-                let res = await response.json();
-                if (response.status == 200) {
-                    statusBox.style.color = "var(--success)";
-                    statusBox.innerText = "Message sent instantly to my inbox!";
-                    form.reset();
-                } else {
-                    statusBox.style.color = "#f87171";
-                    statusBox.innerText = res.message;
-                }
-            })
-            .catch(error => {
-                statusBox.style.color = "#f87171";
-                statusBox.innerText = "Network transmission failed. Please try again.";
-            })
-            .then(() => {
-                statusBox.style.display = "block";
-                submitBtn.innerText = "Send Message";
-                submitBtn.disabled = false;
-                setTimeout(() => { statusBox.style.display = "none"; }, 5000);
-            });
-        });
     </script>
 </body>
 </html>
