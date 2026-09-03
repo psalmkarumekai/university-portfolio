@@ -440,6 +440,8 @@
         function renderHanoiEngine() {
             for (let r = 0; r < 3; r++) {
                 const rodDomElement = document.getElementById(`rod-${r}`);
+                if (!rodDomElement) continue;
+                
                 rodDomElement.innerHTML = ''; // Wipes old node structures from the layout map
                 
                 // Track state selections styles indicators
@@ -458,11 +460,15 @@
                 });
             }
             
-            document.getElementById('hanoiMoveCounter').innerHTML = `Moves Registered: <span>${hanoiMoveCount}</span> / Min: ${hanoiMinMoves}`;
+            const counterElement = document.getElementById('hanoiMoveCounter');
+            if (counterElement) {
+                counterElement.innerHTML = `Moves Registered: <span>${hanoiMoveCount}</span> / Min: ${hanoiMinMoves}`;
+            }
         }
 
         function selectHanoiRod(clickedIndex) {
             const statusDisplay = document.getElementById('hanoiStatus');
+            if (!statusDisplay) return;
             
             // State Sequence A: Picking up an item from a source rod stack node
             if (selectedRodIndex === null) {
@@ -499,7 +505,7 @@
                     statusDisplay.style.color = 'var(--success)';
                     statusDisplay.innerText = `Moved disk safely to Rod ${String.fromCharCode(65 + clickedIndex)}`;
                 } else {
-                    statusDisplay.style.color = var(--text-muted);
+                    statusDisplay.style.color = 'var(--text-muted)';
                     statusDisplay.innerText = "Selection canceled.";
                 }
 
@@ -511,7 +517,9 @@
 
         function checkHanoiVictoryCondition() {
             const statusDisplay = document.getElementById('hanoiStatus');
-            // Success Milestone condition checker evaluation loop
+            if (!statusDisplay) return;
+
+            // ⚠️ FIXED: Explicitly evaluates if all 3 elements sit inside Rod C's LIFO stack parameter
             if (rodMemoryStacks[2].length === 3) {
                 statusDisplay.style.color = 'var(--success)';
                 if (hanoiMoveCount === hanoiMinMoves) {
@@ -527,12 +535,71 @@
             selectedRodIndex = null;
             hanoiMoveCount = 0;
             const statusDisplay = document.getElementById('hanoiStatus');
-            statusDisplay.style.color = 'var(--secondary)';
-            statusDisplay.innerText = "System State: Reset complete.";
+            if (statusDisplay) {
+                statusDisplay.style.color = 'var(--secondary)';
+                statusDisplay.innerText = "System State: Reset complete.";
+            }
             renderHanoiEngine();
         }
 
-        // Bootstrap load sequence
+        /**
+         * 🤖 4. Autonomous Recursive Solution Engine
+         * Demonstrates pure mathematical induction and recursive call stack execution
+         */
+        let isSolvingAutonomously = false;
+        let scheduledMoveQueue = []; // Pipeline array to queue scheduled visual moves
+
+        function computeHanoiMovesRecursively(discsCount, sourceRod, targetRod, auxiliaryRod) {
+            if (discsCount === 1) {
+                scheduledMoveQueue.push({ from: sourceRod, to: targetRod });
+                return;
+            }
+            computeHanoiMovesRecursively(discsCount - 1, sourceRod, auxiliaryRod, targetRod);
+            scheduledMoveQueue.push({ from: sourceRod, to: targetRod });
+            computeHanoiMovesRecursively(discsCount - 1, auxiliaryRod, targetRod, sourceRod);
+        }
+
+        async function playBackNextScheduledMove() {
+            if (scheduledMoveQueue.length === 0) {
+                isSolvingAutonomously = false;
+                const autoplayBtn = document.getElementById('btnAutoplay');
+                if (autoplayBtn) autoplayBtn.disabled = false;
+                checkHanoiVictoryCondition();
+                return;
+            }
+
+            const nextMove = scheduledMoveQueue.shift();
+            const diskElement = rodMemoryStacks[nextMove.from].pop();
+            rodMemoryStacks[nextMove.to].push(diskElement);
+            hanoiMoveCount++;
+
+            const statusDisplay = document.getElementById('hanoiStatus');
+            if (statusDisplay) {
+                statusDisplay.style.color = 'var(--primary)';
+                statusDisplay.innerText = `Algorithm Action: Shifted disc ${diskElement} from Rod ${String.fromCharCode(65 + nextMove.from)} to ${String.fromCharCode(65 + nextMove.to)}`;
+            }
+            
+            renderHanoiEngine();
+            setTimeout(playBackNextScheduledMove, 750);
+        }
+
+        function triggerAutonomousHanoiSolver() {
+            if (isSolvingAutonomously) return;
+
+            resetHanoiGame();
+            isSolvingAutonomously = true;
+            
+            const autoplayBtn = document.getElementById('btnAutoplay');
+            if (autoplayBtn) autoplayBtn.disabled = true;
+            
+            const statusDisplay = document.getElementById('hanoiStatus');
+            if (statusDisplay) statusDisplay.innerText = "Compiling recursive call stack paths...";
+
+            computeHanoiMovesRecursively(3, 0, 2, 1);
+            setTimeout(playBackNextScheduledMove, 500);
+        }
+
+        // Run default initialization sequencing loops on deployment load
         renderHanoiEngine();
 
     </script>
