@@ -166,7 +166,7 @@
             margin-top: auto;
         }
 
-        /* --- 📱 RESPONSIVE CSS MEDIA QUERIES --- */
+        /* ---  RESPONSIVE CSS MEDIA QUERIES --- */
         @media (max-width: 768px) {
             main { margin: 5.5rem auto 3rem auto; padding: 0 1.5rem; }
             h1 { font-size: 2rem; }
@@ -221,10 +221,10 @@
         <h1>Get In Touch</h1>
         <p>Thank you for reviewing my profile. Please use the interface below if you wish to extend an invitation for an admissions interview or share feedback.</p>
         
-        <!-- ⚡ BACKGROUND AJAX FORM: Fixed target endpoint to eliminate HTTP 405 error blocks -->
+       
         <form id="portfolioContactForm">
             <!-- Core Ingestion Tokens -->
-            <input type="hidden" name="access_key" value="81facb76-7d5a-42c8-8e71-492e622d6400">
+            <input type="hidden" name="access_key" value="89d3d405-9ff5-4c94-ac79-c00da9db93f3">
             <input type="hidden" name="subject" value="New University Portfolio Inquiry!">
             <input type="checkbox" name="botcheck" style="display: none;">
 
@@ -244,7 +244,7 @@
 
     <script>
         /**
-         * 📱 1. Mobile Menu Toggle Logic
+         *  1. Mobile Menu Toggle Logic
          */
         function toggleMenu() {
             const navLinks = document.getElementById('navLinks');
@@ -252,7 +252,7 @@
         }
 
         /**
-         * ✉️ 2. Secure Background API Data Stream Dispatcher
+         *  2. Secure Background API Data Stream Dispatcher
          */
         const form = document.getElementById('portfolioContactForm');
         const statusBox = document.getElementById('formStatus');
@@ -270,7 +270,7 @@
             const jsonPayload = JSON.stringify(object);
 
             try {
-                // ⚠️ FIXED: Pointed directly to the proper submission script endpoint pipeline
+              
                 const response = await fetch('https://web3forms.com', {
                     method: 'POST',
                     headers: {
@@ -284,7 +284,7 @@
 
                 if (response.status === 200) {
                     statusBox.style.color = "var(--success)";
-                    statusBox.innerText = "🎉 Message transmitted instantly to my inbox! Thank you.";
+                    statusBox.innerText = " Message transmitted instantly to my inbox! Thank you.";
                     form.reset();
                 } else {
                     statusBox.style.color = "#ef4444";
